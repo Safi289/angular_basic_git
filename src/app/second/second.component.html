@@ -15,7 +15,21 @@
 </p> -->
 <form [formGroup]="myform" (ngSubmit)="onSubmit()">
     <label for="username">Username:
-        <input type="text" formControlName="username">
+        <input type="text" formControlName="username" class="form-control" required maxlength="40" minlength="6" [class.is-invalid]="username?.touched && username?.invalid">
+        <span *ngIf="!username?.errors">
+            <input type="checkbox" checked onclick="return false;">
+        </span>
+        <div *ngIf="username?.invalid && (username?.dirty || username?.touched)" class="alert alert-danger">
+            <div *ngIf="username?.hasError('required')">
+                Username is required
+            </div>
+            <div *ngIf="username?.hasError('minlength')">
+                Username at least 6 character
+            </div>
+            <div *ngIf="username?.hasError('maxlength')">
+                Username at most 40 character
+            </div>
+        </div>
     </label><br>
     <label for="password">Password:
         <input type="text" formControlName="password">
@@ -25,4 +39,21 @@
 <p>
     {{ myform.value | json }}
 </p>
+<h1>
+    Template Driven Form
+</h1>
+<div>
+    <input type="text" name="firstname" class="form-control" required minlength="6" maxlength="10" [(ngModel)]="person.firstname" #firstname="ngModel">
+    <div *ngIf="firstname?.invalid && (firstname?.dirty || firstname?.touched)" class="alert alert-danger">
+        <div *ngIf="firstname?.errors?.['required']">
+            firstname is required
+        </div>
+        <div *ngIf="firstname?.errors?.['minlength']">
+            firstname at least 6 character
+        </div>
+        <div *ngIf="firstname?.errors?.['maxlength']">
+            firstname at most 10 character
+        </div>
+    </div>
+</div>
 <a [routerLink]="['']" routerLinkActive="router-link-active">Go to First Component</a>

@@ -8,6 +8,7 @@ import { ChannelService } from '../services/channel.service';
 })
 export class FirstComponent implements OnInit {
 
+  channels: any;
   title = "Hello, I AM Safi Ul Sahid!";
   items: any[] = [
     'name', 'fame', 'wealth'
@@ -16,6 +17,7 @@ export class FirstComponent implements OnInit {
 
   ngOnInit(): void {
     this.f();
+    this.showChannel();
   }
   f(){
     // return this.title;
@@ -26,6 +28,11 @@ export class FirstComponent implements OnInit {
   }
   message(){
     return this.chService.display();
+  }
+  showChannel(){
+    console.log(this.chService.getChannels().subscribe((channel)=>{
+      this.channels = channel;
+    }));
   }
 
 }
